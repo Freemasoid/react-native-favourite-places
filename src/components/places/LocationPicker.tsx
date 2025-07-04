@@ -1,5 +1,5 @@
 import { Image, StyleSheet, View } from "react-native";
-import OutlinedButton from "../ui/OutlinedButton";
+import { OutlinedButton } from "../ui";
 import { Colours } from "@/constants/colors";
 import {
   getCurrentPositionAsync,

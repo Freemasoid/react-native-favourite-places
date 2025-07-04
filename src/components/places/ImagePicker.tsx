@@ -6,7 +6,7 @@ import {
   PermissionStatus,
 } from "expo-image-picker";
 import { Colours } from "@/constants/colors";
-import OutlinedButton from "../ui/OutlinedButton";
+import { OutlinedButton } from "../ui";
 
 function ImagePicker() {
   const [pickedImage, setPickedImage] = useState("");

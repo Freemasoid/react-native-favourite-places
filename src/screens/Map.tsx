@@ -2,7 +2,7 @@ import { useCallback, useLayoutEffect, useState } from "react";
 import { Alert, StyleSheet } from "react-native";
 import MapView, { MapPressEvent, Marker } from "react-native-maps";
 import { NavigationProp } from "@/types/navigation";
-import IconButton from "@/components/ui/IconButton";
+import { IconButton } from "@/components/ui";
 
 interface MapProps {
   navigation: NavigationProp;
