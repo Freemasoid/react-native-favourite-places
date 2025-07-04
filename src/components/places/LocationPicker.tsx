@@ -6,15 +6,22 @@ import {
   useForegroundPermissions,
   PermissionStatus,
 } from "expo-location";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import getMapPreview from "@/utils/location";
-import { useNavigation } from "@react-navigation/native";
-import { NavigationProp } from "@/types/navigation";
+import {
+  useNavigation,
+  useRoute,
+  RouteProp,
+  useIsFocused,
+} from "@react-navigation/native";
+import { NavigationProp, RootStackParamList } from "@/types/navigation";
 
 type PickedLocationType = {
   lat: number;
   lng: number;
 };
+
+type AddPlaceRouteProp = RouteProp<RootStackParamList, "AddPlace">;
 
 function LocationPicker() {
   const [pickedLocation, setPickedLocation] = useState<PickedLocationType>({
@@ -25,6 +32,19 @@ function LocationPicker() {
     useForegroundPermissions();
 
   const navigation = useNavigation<NavigationProp>();
+  const route = useRoute<AddPlaceRouteProp>();
+  const isFocused = useIsFocused();
+
+  useEffect(() => {
+    if (isFocused && route.params) {
+      const mapPickedLocation = {
+        lat: route.params.pickedLat,
+        lng: route.params.pickedLng,
+      };
+
+      setPickedLocation(mapPickedLocation);
+    }
+  }, [route, isFocused]);
 
   async function verifyPermissions() {
     if (
@@ -74,16 +94,10 @@ function LocationPicker() {
         />
       </View>
       <View style={styles.actions}>
-        <OutlinedButton
-          icon="location"
-          onPress={getLocationHandler}
-        >
+        <OutlinedButton icon="location" onPress={getLocationHandler}>
           Locate User
         </OutlinedButton>
-        <OutlinedButton
-          icon="map"
-          onPress={pickOnMapHandler}
-        >
+        <OutlinedButton icon="map" onPress={pickOnMapHandler}>
           Pick on Map
         </OutlinedButton>
       </View>
