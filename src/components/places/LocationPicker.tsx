@@ -8,6 +8,8 @@ import {
 } from "expo-location";
 import { useState } from "react";
 import getMapPreview from "@/utils/location";
+import { useNavigation } from "@react-navigation/native";
+import { NavigationProp } from "@/types/navigation";
 
 type PickedLocationType = {
   lat: number;
@@ -21,6 +23,8 @@ function LocationPicker() {
   });
   const [locationPermissionInformation, requestPermission] =
     useForegroundPermissions();
+
+  const navigation = useNavigation<NavigationProp>();
 
   async function verifyPermissions() {
     if (
@@ -52,14 +56,9 @@ function LocationPicker() {
     });
   }
 
-  console.log(
-    getMapPreview({
-      lat: pickedLocation.lat,
-      lng: pickedLocation.lng,
-    })
-  );
-
-  function pickOnMapHandler() {}
+  function pickOnMapHandler() {
+    navigation.navigate("Map");
+  }
 
   return (
     <View>
