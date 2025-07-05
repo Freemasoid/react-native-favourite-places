@@ -8,3 +8,8 @@ export type Place = {
     lng: number;
   };
 };
+
+export type PickedLocation = {
+  lat: number;
+  lng: number;
+};

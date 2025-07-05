@@ -15,16 +15,16 @@ import {
   useIsFocused,
 } from "@react-navigation/native";
 import { NavigationProp, RootStackParamList } from "@/types/navigation";
-
-type PickedLocationType = {
-  lat: number;
-  lng: number;
-};
+import { PickedLocation } from "@/types/types";
 
 type AddPlaceRouteProp = RouteProp<RootStackParamList, "AddPlace">;
 
-function LocationPicker() {
-  const [pickedLocation, setPickedLocation] = useState<PickedLocationType>({
+function LocationPicker({
+  onPickLocation,
+}: {
+  onPickLocation: (location: PickedLocation) => void;
+}) {
+  const [pickedLocation, setPickedLocation] = useState<PickedLocation>({
     lat: 55.75583,
     lng: 37.6173,
   });
@@ -45,6 +45,10 @@ function LocationPicker() {
       setPickedLocation(mapPickedLocation);
     }
   }, [route, isFocused]);
+
+  useEffect(() => {
+    onPickLocation(pickedLocation);
+  }, [pickedLocation, onPickLocation]);
 
   async function verifyPermissions() {
     if (
