@@ -4,9 +4,13 @@ import ImagePicker from "./ImagePicker";
 import { View, Text, ScrollView, TextInput, StyleSheet } from "react-native";
 import LocationPicker from "./LocationPicker";
 import { Button } from "../ui";
-import { PickedLocation } from "@/types/types";
+import { PickedLocation, Place } from "@/types/types";
 
-function PlaceForm() {
+function PlaceForm({
+  onCreatePlace,
+}: {
+  onCreatePlace: (place: Place) => void;
+}) {
   const [enteredTitle, setEnteredTitle] = useState("");
   const [selectedImage, setSelectedImage] = useState("");
   const [pickedLocation, setPickedLocation] = useState<PickedLocation>({
@@ -26,7 +30,17 @@ function PlaceForm() {
     setPickedLocation(location);
   }, []);
 
-  function savePlaceHandler() {}
+  function savePlaceHandler() {
+    const placeData: Place = {
+      id: Math.random().toString(16).slice(2),
+      title: enteredTitle,
+      imageUri: selectedImage,
+      address: pickedLocation?.address,
+      location: { lat: pickedLocation.lat, lng: pickedLocation.lng },
+    };
+
+    onCreatePlace(placeData);
+  }
 
   return (
     <ScrollView style={styles.form}>

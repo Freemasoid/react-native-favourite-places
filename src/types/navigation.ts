@@ -1,7 +1,8 @@
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { Place } from "./types";
 
 export type RootStackParamList = {
-  AllPlaces: undefined;
+  AllPlaces: { place: Place } | undefined;
   AddPlace:
     | {
         pickedLat: number;

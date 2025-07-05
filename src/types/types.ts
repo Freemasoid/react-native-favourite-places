@@ -2,7 +2,7 @@ export type Place = {
   id: string;
   title: string;
   imageUri: string;
-  address: string;
+  address: string | undefined;
   location: {
     lat: number;
     lng: number;
