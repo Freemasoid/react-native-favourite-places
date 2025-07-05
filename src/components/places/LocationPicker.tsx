@@ -50,7 +50,7 @@ function LocationPicker({
     async function handleLocation() {
       if (pickedLocation) {
         const address = await getAddress(pickedLocation);
-        onPickLocation(...pickedLocation, address);
+        onPickLocation({ ...pickedLocation, address });
       }
     }
 
@@ -105,10 +105,16 @@ function LocationPicker({
         />
       </View>
       <View style={styles.actions}>
-        <OutlinedButton icon="location" onPress={getLocationHandler}>
+        <OutlinedButton
+          icon="location"
+          onPress={getLocationHandler}
+        >
           Locate User
         </OutlinedButton>
-        <OutlinedButton icon="map" onPress={pickOnMapHandler}>
+        <OutlinedButton
+          icon="map"
+          onPress={pickOnMapHandler}
+        >
           Pick on Map
         </OutlinedButton>
       </View>
