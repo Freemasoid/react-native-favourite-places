@@ -1,29 +1,55 @@
 import { OutlinedButton } from "@/components/ui";
 import { Colours } from "@/constants/colors";
-import { RootStackParamList } from "@/types/navigation";
+import { NavigationProp, RootStackParamList } from "@/types/navigation";
+import { Place } from "@/types/types";
+import { fetchPlaceDetails } from "@/utils/database";
 import { RouteProp } from "@react-navigation/native";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Image, ScrollView, StyleSheet, Text, View } from "react-native";
 
 type PlaceDetailsRouteProp = RouteProp<RootStackParamList, "PlaceDetails">;
 
 interface PlaceDetailsProps {
   route: PlaceDetailsRouteProp;
+  navigation: NavigationProp;
 }
 
-function PlacesDetails({ route }: PlaceDetailsProps) {
+function PlacesDetails({ route, navigation }: PlaceDetailsProps) {
+  const [fetchedPlace, setFetchedPlace] = useState<Place>();
+
   function showOnMapHandler() {}
 
   const selectedPlaceId = route.params.placeId;
 
-  useEffect(() => {}, [selectedPlaceId]);
+  useEffect(() => {
+    async function loadPlaceData() {
+      const place = await fetchPlaceDetails(selectedPlaceId);
+      setFetchedPlace(place);
+      navigation.setOptions({
+        title: place.title,
+      });
+    }
+
+    loadPlaceData();
+  }, [selectedPlaceId]);
+
+  if (!fetchedPlace) {
+    return (
+      <View style={styles.fallback}>
+        <Text>Loading place data...</Text>
+      </View>
+    );
+  }
 
   return (
     <ScrollView>
-      <Image style={styles.image} />
+      <Image
+        style={styles.image}
+        source={{ uri: fetchedPlace?.imageUri }}
+      />
       <View style={styles.locationContainer}>
         <View style={styles.addressContainer}>
-          <Text style={styles.address}>ADDRESS</Text>
+          <Text style={styles.address}>{fetchedPlace?.address}</Text>
         </View>
 
         <OutlinedButton
@@ -40,6 +66,11 @@ function PlacesDetails({ route }: PlaceDetailsProps) {
 export default PlacesDetails;
 
 const styles = StyleSheet.create({
+  fallback: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
   image: {
     height: "35%",
     minHeight: 300,

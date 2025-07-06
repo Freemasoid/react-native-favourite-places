@@ -56,3 +56,28 @@ export async function fetchPlaces(): Promise<Place[]> {
     },
   }));
 }
+
+export async function fetchPlaceDetails(id: string): Promise<Place> {
+  const db = await getDb();
+
+  const result = await db.getAllAsync(`SELECT * FROM places WHERE id = ?`, [
+    id,
+  ]);
+
+  if (result.length === 0) {
+    throw new Error(`Place with id ${id} not found`);
+  }
+
+  const row = result[0] as any;
+
+  return {
+    id: row.id.toString(),
+    title: row.title,
+    imageUri: row.imageUri,
+    address: row.address,
+    location: {
+      lat: row.lat,
+      lng: row.lng,
+    },
+  };
+}
