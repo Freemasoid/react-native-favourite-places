@@ -7,10 +7,25 @@ import IconButton from "@/components/ui/IconButton";
 import { Colours } from "@/constants/colors";
 import Map from "@/screens/Map";
 import { RootStackParamList } from "@/types/navigation";
+import { useEffect, useState } from "react";
+import { initDb } from "@/utils/database";
+import AppLoading from "expo-app-loading";
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export default function App() {
+  const [dbInitialized, setDbInitialized] = useState(false);
+
+  useEffect(() => {
+    initDb()
+      .then(() => setDbInitialized(true))
+      .catch((err) => console.log("Database init failed:", err));
+  }, []);
+
+  if (!dbInitialized) {
+    return <AppLoading />;
+  }
+
   return (
     <>
       <StatusBar style="dark" />
