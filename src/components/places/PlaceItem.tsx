@@ -13,10 +13,16 @@ function PlaceItem({ place, onSelect }: PlaceItemProps) {
       style={({ pressed }) => [styles.item, pressed && styles.pressed]}
       onPress={onSelect}
     >
-      <Image
-        style={styles.image}
-        source={{ uri: place.imageUri }}
-      />
+      {place.imageUri ? (
+        <Image
+          style={styles.image}
+          source={{ uri: place.imageUri }}
+        />
+      ) : (
+        <View style={[styles.image, styles.imagePlaceholder]}>
+          <Text style={styles.placeholderText}>No Image</Text>
+        </View>
+      )}
       <View style={styles.info}>
         <Text style={styles.title}>{place.title}</Text>
         <Text style={styles.address}>{place.address}</Text>
@@ -49,6 +55,16 @@ const styles = StyleSheet.create({
     height: 100,
     borderTopLeftRadius: 6,
     borderBottomLeftRadius: 6,
+  },
+  imagePlaceholder: {
+    backgroundColor: Colours.primary100,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  placeholderText: {
+    color: Colours.primary700,
+    fontSize: 12,
+    fontWeight: "bold",
   },
   info: {
     flex: 2,

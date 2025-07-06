@@ -9,10 +9,12 @@ export type RootStackParamList = {
         pickedLng: number;
       }
     | undefined;
-  Map: {
-    initialLat?: number;
-    initialLng?: number;
-  };
+  Map:
+    | {
+        initialLat?: number;
+        initialLng?: number;
+      }
+    | undefined;
   PlaceDetails: {
     placeId: string;
   };

@@ -48,10 +48,16 @@ function PlacesDetails({ route, navigation }: PlaceDetailsProps) {
 
   return (
     <ScrollView>
-      <Image
-        style={styles.image}
-        source={{ uri: fetchedPlace?.imageUri }}
-      />
+      {fetchedPlace?.imageUri ? (
+        <Image
+          style={styles.image}
+          source={{ uri: fetchedPlace.imageUri }}
+        />
+      ) : (
+        <View style={[styles.image, styles.imagePlaceholder]}>
+          <Text style={styles.placeholderText}>No Image Available</Text>
+        </View>
+      )}
       <View style={styles.locationContainer}>
         <View style={styles.addressContainer}>
           <Text style={styles.address}>{fetchedPlace?.address}</Text>
@@ -80,6 +86,16 @@ const styles = StyleSheet.create({
     height: "35%",
     minHeight: 300,
     width: "100%",
+  },
+  imagePlaceholder: {
+    backgroundColor: Colours.primary100,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  placeholderText: {
+    color: Colours.primary700,
+    fontSize: 18,
+    fontWeight: "bold",
   },
   locationContainer: {
     justifyContent: "center",

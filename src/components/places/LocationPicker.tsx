@@ -1,4 +1,4 @@
-import { Image, StyleSheet, View } from "react-native";
+import { Image, StyleSheet, View, Text } from "react-native";
 import { OutlinedButton } from "../ui";
 import { Colours } from "@/constants/colors";
 import {
@@ -94,15 +94,19 @@ function LocationPicker({
   return (
     <View>
       <View style={styles.mapPreview}>
-        <Image
-          style={styles.image}
-          source={{
-            uri: getMapPreview({
-              lat: pickedLocation.lat,
-              lng: pickedLocation.lng,
-            }),
-          }}
-        />
+        {pickedLocation.lat !== 0.0 || pickedLocation.lng !== 0.0 ? (
+          <Image
+            style={styles.image}
+            source={{
+              uri: getMapPreview({
+                lat: pickedLocation.lat,
+                lng: pickedLocation.lng,
+              }),
+            }}
+          />
+        ) : (
+          <Text style={styles.placeholderText}>No location chosen yet.</Text>
+        )}
       </View>
       <View style={styles.actions}>
         <OutlinedButton
@@ -142,5 +146,10 @@ const styles = StyleSheet.create({
   image: {
     width: "100%",
     height: "100%",
+  },
+  placeholderText: {
+    color: Colours.primary700,
+    fontSize: 16,
+    fontWeight: "bold",
   },
 });

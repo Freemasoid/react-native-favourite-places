@@ -1,7 +1,14 @@
 import { Colours } from "@/constants/colors";
 import { useCallback, useState } from "react";
 import ImagePicker from "./ImagePicker";
-import { View, Text, ScrollView, TextInput, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  ScrollView,
+  TextInput,
+  StyleSheet,
+  Alert,
+} from "react-native";
 import LocationPicker from "./LocationPicker";
 import { Button } from "../ui";
 import { PickedLocation, Place } from "@/types/types";
@@ -31,6 +38,16 @@ function PlaceForm({
   }, []);
 
   function savePlaceHandler() {
+    if (!selectedImage) {
+      Alert.alert("No Image", "Please take a photo before saving the place.");
+      return;
+    }
+
+    if (!enteredTitle.trim()) {
+      Alert.alert("No Title", "Please enter a title for the place.");
+      return;
+    }
+
     const placeData: Place = {
       id: Math.random().toString(16).slice(2),
       title: enteredTitle,
