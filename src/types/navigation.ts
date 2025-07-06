@@ -10,6 +10,9 @@ export type RootStackParamList = {
       }
     | undefined;
   Map: undefined;
+  PlaceDetails: {
+    placeId: string;
+  };
 };
 
 export type NavigationProp = NativeStackNavigationProp<RootStackParamList>;

@@ -39,3 +39,20 @@ export async function insertPlace(place: Place) {
     ]
   );
 }
+
+export async function fetchPlaces(): Promise<Place[]> {
+  const db = await getDb();
+
+  const result = await db.getAllAsync(`SELECT * FROM places`);
+
+  return result.map((row: any) => ({
+    id: row.id.toString(),
+    title: row.title,
+    imageUri: row.imageUri,
+    address: row.address,
+    location: {
+      lat: row.lat,
+      lng: row.lng,
+    },
+  }));
+}
