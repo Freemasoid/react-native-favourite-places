@@ -10,8 +10,7 @@ interface AddPlaceProps {
 function AddPlace({ navigation }: AddPlaceProps) {
   async function createPlaceHandler(place: Place) {
     await insertPlace(place);
-    navigation.navigate("AllPlaces", { place: place });
-    console.log(place);
+    navigation.navigate("AllPlaces");
   }
 
   return <PlaceForm onCreatePlace={createPlaceHandler} />;

@@ -1,11 +1,9 @@
 import { StatusBar } from "expo-status-bar";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import AllPlaces from "@/screens/AllPlaces";
-import AddPlace from "@/screens/AddPlace";
+import { AllPlaces, Map, AddPlace, PlacesDetails } from "@/screens";
 import { NavigationContainer } from "@react-navigation/native";
-import IconButton from "@/components/ui/IconButton";
+import { IconButton } from "@/components/ui";
 import { Colours } from "@/constants/colors";
-import Map from "@/screens/Map";
 import { RootStackParamList } from "@/types/navigation";
 import { useEffect, useState } from "react";
 import { initDb } from "@/utils/database";
@@ -63,6 +61,10 @@ export default function App() {
           <Stack.Screen
             name="Map"
             component={Map}
+          />
+          <Stack.Screen
+            name="PlaceDetails"
+            component={PlacesDetails}
           />
         </Stack.Navigator>
       </NavigationContainer>
