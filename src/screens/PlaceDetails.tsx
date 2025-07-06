@@ -17,7 +17,12 @@ interface PlaceDetailsProps {
 function PlacesDetails({ route, navigation }: PlaceDetailsProps) {
   const [fetchedPlace, setFetchedPlace] = useState<Place>();
 
-  function showOnMapHandler() {}
+  function showOnMapHandler() {
+    navigation.navigate("Map", {
+      initialLat: fetchedPlace?.location.lat,
+      initialLng: fetchedPlace?.location.lng,
+    });
+  }
 
   const selectedPlaceId = route.params.placeId;
 
