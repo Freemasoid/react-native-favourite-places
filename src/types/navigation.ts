@@ -3,10 +3,12 @@ import { Place } from "./types";
 
 export type RootStackParamList = {
   AllPlaces: { place: Place } | undefined;
-  AddPlace: {
-    pickedLat: number;
-    pickedLng: number;
-  };
+  AddPlace:
+    | {
+        pickedLat: number;
+        pickedLng: number;
+      }
+    | undefined;
   Map: {
     initialLat?: number;
     initialLng?: number;
