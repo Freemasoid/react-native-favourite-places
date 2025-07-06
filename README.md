@@ -6,9 +6,9 @@ This is a course app **[React Native - The Practical Guide [2025]](https://www.u
 
 A React Native mobile application that allows users to save and manage their favorite places with photos, location data, and interactive maps.
 
-|     |
-| --- |
-|     |
+|                                  |
+| -------------------------------- |
+| ![preview](./assets/preview.gif) |
 
 ## 🚀 Features
 
