@@ -45,12 +45,16 @@ const styles = StyleSheet.create({
   },
   image: {
     flex: 1,
+    width: 100,
+    height: 100,
+    borderTopLeftRadius: 6,
+    borderBottomLeftRadius: 6,
   },
   info: {
     flex: 2,
-    borderBottomLeftRadius: 4,
-    borderTopLeftRadius: 4,
+    padding: 12,
     height: 100,
+    justifyContent: "center",
   },
   title: {
     fontWeight: "bold",

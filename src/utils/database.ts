@@ -1,9 +1,12 @@
+import { Place } from "@/types/types";
 import * as SQLite from "expo-sqlite";
 
-export async function initDb() {
-  const db = await SQLite.openDatabaseAsync("places.db");
+let database: SQLite.SQLiteDatabase | null = null;
 
-  await db.execAsync(`
+export async function initDb() {
+  database = await SQLite.openDatabaseAsync("places.db");
+
+  await database.execAsync(`
     CREATE TABLE IF NOT EXISTS places (
       id INTEGER PRIMARY KEY NOT NULL,
       title TEXT NOT NULL,
@@ -13,4 +16,26 @@ export async function initDb() {
       lng REAL NOT NULL
     )
   `);
+}
+
+async function getDb() {
+  if (!database) {
+    await initDb();
+  }
+  return database!;
+}
+
+export async function insertPlace(place: Place) {
+  const db = await getDb();
+
+  await db.runAsync(
+    `INSERT INTO places (title, imageUri, address, lat, lng) VALUES (?, ?, ?, ?, ?)`,
+    [
+      place.title,
+      place.imageUri,
+      place.address || "",
+      place.location.lat,
+      place.location.lng,
+    ]
+  );
 }
